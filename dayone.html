@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCB DayOne Onboarding</title>
+    <style>
+        /* CSS Variables - Default is Dark Mode */
+        :root {
+            --bg-color: #111111;
+            --card-bg: #242424;
+            --text-main: #ffffff;
+            --text-muted: #a19f9d;
+            --accent: #0078d4; /* Microsoft standard blue */
+            --accent-hover: #005a9e;
+            
+            /* Orange Button */
+            --btn-orange: #cc5500; /* Burnt Orange */
+            --btn-orange-hover: #a64500;
+            
+            /* Notes Panel Colors - Dark */
+            --info-bg: #1e2d3d;
+            --info-text: #6cb8f6;
+            --info-block-bg: rgba(0, 0, 0, 0.4);
+            --code-text: #ffb900; /* High contrast yellow for code in dark mode */
+        }
+
+        /* Light Mode Override Variables */
+        [data-theme="light"] {
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-main: #242424;
+            --text-muted: #605e5c;
+            
+            /* Notes Panel Colors - Light */
+            --info-bg: #e8f3fc;
+            --info-text: #004080;
+            --info-block-bg: rgba(255, 255, 255, 0.7);
+            --code-text: #000000;
+        }
+        
+        body {
+            /* Microsoft Fluent Design Font Stack */
+            font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+        }
+
+        /* Theme Toggle */
+        .header-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-main);
+        }
+
+        /* Step Cards */
+        .step-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background-color 0.3s ease;
+        }
+
+        .step-header {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0 0 20px 0;
+        }
+
+        /* Buttons */
+        .button {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            background-color: var(--accent);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+        }
+
+        .button:last-child { margin-bottom: 0; }
+        .button:hover { background-color: var(--accent-hover); }
+
+        /* Burnt Orange Button Override */
+        .button.orange {
+            background-color: var(--btn-orange);
+            color: #ffffff;
+        }
+        .button.orange:hover {
+            background-color: var(--btn-orange-hover);
+        }
+
+        /* Standout Credential Panel */
+        .info-panel {
+            background-color: var(--info-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--info-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .info-panel-header {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .info-panel-header svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            fill: currentColor;
+        }
+
+        .credential-block {
+            background: var(--info-block-bg);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .credential-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .credential-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            opacity: 0.8;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .code {
+            font-family: Consolas, "Courier New", monospace;
+            font-weight: 600;
+            color: var(--code-text);
+        }
+
+        .example-text {
+            font-size: 13px;
+            margin-top: 6px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        #desktop-fallback { display: none; text-align: center; padding-top: 40px; }
+    </style>
+
+    <script>
+        // Theme Toggle Logic
+        function toggleTheme() {
+            const docEl = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+            
+            if (docEl.getAttribute('data-theme') === 'light') {
+                docEl.removeAttribute('data-theme'); // Revert to root (Dark)
+                btn.innerHTML = '☀️ Light Mode';
+            } else {
+                docEl.setAttribute('data-theme', 'light');
+                btn.innerHTML = '🌙 Dark Mode';
+            }
+        }
+
+        // OS Detection and Routing Logic
+        function configurePage() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            let os = "unknown";
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                os = "ios";
+            } else if (/android/i.test(userAgent)) {
+                os = "android";
+            }
+
+            const appLinks = {
+                ios: {
+                    authenticator: "https://apps.apple.com/us/app/microsoft-authenticator/id983156458",
+                    teams: "https://apps.apple.com/us/app/microsoft-teams/id1113153706",
+                    outlook: "https://apps.apple.com/us/app/microsoft-outlook/id951937596"
+                },
+                android: {
+                    authenticator: "https://play.google.com/store/apps/details?id=com.azure.authenticator",
+                    teams: "https://play.google.com/store/apps/details?id=com.microsoft.teams",
+                    outlook: "https://play.google.com/store/apps/details?id=com.microsoft.office.outlook"
+                }
+            };
+
+            if (os === "ios" || os === "android") {
+                document.getElementById('btn-auth').href = appLinks[os].authenticator;
+                document.getElementById('btn-teams').href = appLinks[os].teams;
+                document.getElementById('btn-outlook').href = appLinks[os].outlook;
+            } else {
+                // FORCE SHOW MOBILE UI FOR DESKTOP TESTING
+                document.getElementById('btn-auth').href = appLinks["ios"].authenticator;
+                document.getElementById('btn-teams').href = appLinks["ios"].teams;
+                document.getElementById('btn-outlook').href = appLinks["ios"].outlook;
+            }
+        }
+
+        window.onload = configurePage;
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header-controls">
+            <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+                ☀️ Light Mode
+            </button>
+        </div>
+
+        <div id="mobile-flow">
+            <h1>CCB DayOne Onboarding</h1>
+
+            <div class="step-card">
+                <span class="step-header">Step 1</span>
+                <h2>Get Authenticator</h2>
+                <p>If you already have Microsoft Authenticator, skip to Step 2. Otherwise, install it now.</p>
+                <a href="#" id="btn-auth" class="button">Install Authenticator</a>
+            </div>
+
+            <div class="step-card">
+                <span class="step-header">Step 2</span>
+                <h2>Install Core Apps</h2>
+                <p>Download your workspace applications before signing in.</p>
+                <a href="#" id="btn-teams" class="button">Install Teams</a>
+                <a href="#" id="btn-outlook" class="button">Install Outlook</a>
+            </div>
+
+            <div class="step-card">
+                <span class="step-header">Step 3</span>
+                <h2>Initial Login & Setup</h2>
+                <p>Sign in to Office 365. This will securely bind your new account to the Authenticator app you just installed.</p>
+                <a href="https://portal.office.com" target="_blank" class="button orange">Start Office 365 Login</a>
+            </div>
+
+            <div class="info-panel">
+                <div class="info-panel-header">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
+                    </svg>
+                    Your Account Details
+                </div>
+                
+                <div class="credential-block">
+                    <span class="credential-label">Login ID</span>
+                    <span class="code">firstname.lastname@cabot.com</span>
+                </div>
+
+                <div class="credential-block">
+                    <span class="credential-label">New Password Rules</span>
+                    Must be exactly <strong>12 characters</strong> and include:<br>
+                    • Uppercase letter<br>
+                    • Lowercase letter<br>
+                    • A symbol (!@#$%)
+                    <div class="example-text">Example: <span class="code">Summersun26!</span></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="desktop-fallback">
+            <h1>Mobile Setup Only</h1>
+            <p>Please scan the onboarding QR code using your iPhone or Android camera to proceed.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
